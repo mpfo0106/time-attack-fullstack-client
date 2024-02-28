@@ -11,7 +11,11 @@ class AuthAPI {
   }
 
   signUp = async (dto: SignUpDto) => {
-    const response = await this.coreClient.post<Response>("/auth/sign-up", dto);
+    const response = await this.coreClient.post<Response>(
+      "/auth/sign-up",
+      dto,
+      {}
+    );
     const accessToken = response.data.result?.["accessToken"];
 
     return accessToken;
@@ -23,6 +27,20 @@ class AuthAPI {
 
     return accessToken;
   };
-}
 
+  refresh = async () => {
+    const accessToken = localStorage.getItem("accessToken");
+    const response = await this.coreClient.get<Response>(
+      "/auth/refresh-token",
+      {
+        headers: {
+          Authorization: accessToken ? `Bearer ${accessToken}` : undefined,
+        },
+      }
+    );
+    const newAccessToken = response.data?.result;
+
+    return newAccessToken;
+  };
+}
 export default AuthAPI;

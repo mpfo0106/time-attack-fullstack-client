@@ -6,6 +6,7 @@ import Heading from "@/components/Heading";
 import Input from "@/components/Input";
 import Page from "@/components/Page";
 import { useAuth } from "@/contexts/auth.context";
+
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -34,6 +35,7 @@ function SignUpPage() {
       const accessToken = await mutateAsync({ email, password });
       if (!accessToken) throw new Error();
       auth.logIn(accessToken);
+      
 
       router.replace("/");
     } catch (e) {

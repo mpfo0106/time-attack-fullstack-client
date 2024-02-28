@@ -1,6 +1,7 @@
 import { AuthProvider } from "@/contexts/auth.context";
 import { ModalProvider } from "@/contexts/modal.context";
 import { ReactQueryProvider } from "@/react-query";
+
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 function ProvidersLayout({ children }: { children: React.ReactNode }) {
