@@ -51,9 +51,7 @@ class DealAPI {
     const response = await this.coreClient.get<Response<GetProductsData>>(
       "/my/deals/written"
     );
-    console.log(222);
-    console.log(response);
-    console.log(111);
+
     const data = response.data;
     if (!data.success) throw new Error(data.error.message);
 

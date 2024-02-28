@@ -45,7 +45,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
     if (isLoggedIn) {
       refreshToken();
-      timerId = window.setInterval(refreshToken, 1000 * 2);
+      timerId = window.setInterval(refreshToken, 1000 * 60 * 4.5);
     }
 
     return () => {
