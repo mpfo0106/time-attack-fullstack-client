@@ -7,16 +7,13 @@ interface ProductCardProps {
   deal: Awaited<ReturnType<typeof API.deal.getDeals>>[number];
 }
 
-function ProductCard({ deal }: ProductCardProps) {
+function DealCard({ deal }: ProductCardProps) {
   return (
-    <Link
-      href={`/products/${deal.id}`}
-      className="relative flex flex-col group"
-    >
+    <Link href={`/deals/${deal.id}`} className="relative flex flex-col group">
       <div className="aspect-[3/4] relative mb-4">
         <Image
-          alt={deal.imgUrl}
-          src={deal.title}
+          alt={deal.title}
+          src={deal.imgUrl}
           fill
           className="object-cover group-hover:scale-105 transition-transform"
           unoptimized
@@ -39,4 +36,4 @@ function ProductCard({ deal }: ProductCardProps) {
   );
 }
 
-export default ProductCard;
+export default DealCard;

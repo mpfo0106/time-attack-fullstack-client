@@ -32,7 +32,6 @@ function CreatePostPage() {
 
   const handleClickSubmit = async () => {
     try {
-      console.log(imgUrl);
       await mutateAsync({
         title,
         content,
@@ -40,6 +39,7 @@ function CreatePostPage() {
         price,
         region,
       });
+      alert("성공적으로 글이 작성되었습니다!");
     } catch (e) {
       alert("판매글 생성에 실패하였습니다.");
     }
@@ -47,9 +47,7 @@ function CreatePostPage() {
 
   return (
     <>
-      {!auth.isLoggedIn ? (
-        <LogInModal />
-      ) : (
+      {auth.isLoggedIn ? (
         <Page>
           <Heading>판매글 작성하기</Heading>
 
@@ -101,6 +99,8 @@ function CreatePostPage() {
             </Button>
           </section>
         </Page>
+      ) : (
+        <LogInModal />
       )}
     </>
   );

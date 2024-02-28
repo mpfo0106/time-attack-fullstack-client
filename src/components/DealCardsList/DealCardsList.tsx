@@ -1,20 +1,20 @@
 import { ComponentProps } from "react";
-import ProductCard from "../DealCard";
+import DealCard from "../DealCard";
 
-interface ProductCardsListProps {
-  deals: Array<ComponentProps<typeof ProductCard>["deal"]>;
+interface DealCardsListProps {
+  deals: Array<ComponentProps<typeof DealCard>["deal"]>;
 }
 
-function ProductCardsList({ deals }: ProductCardsListProps) {
+function DealCardsList({ deals }: DealCardsListProps) {
   return (
     <ul className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-x-8 gap-y-12">
       {deals.map((deal) => (
         <li key={deal.id}>
-          <ProductCard deal={deal} />
+          <DealCard deal={deal} />
         </li>
       ))}
     </ul>
   );
 }
 
-export default ProductCardsList;
+export default DealCardsList;

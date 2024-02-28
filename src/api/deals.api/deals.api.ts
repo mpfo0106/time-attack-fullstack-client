@@ -13,7 +13,8 @@ class DealAPI {
 
   createDeal = async (dto: CreateDealDto) => {
     const response = await this.coreClient.post<Response<PostProductData>>(
-      "/deal/create"
+      "/deal/create",
+      dto
     );
     const data = response.data;
     if (!data.success) throw new Error(data.error.message);
@@ -50,6 +51,9 @@ class DealAPI {
     const response = await this.coreClient.get<Response<GetProductsData>>(
       "/my/deals/written"
     );
+    console.log(222);
+    console.log(response);
+    console.log(111);
     const data = response.data;
     if (!data.success) throw new Error(data.error.message);
 

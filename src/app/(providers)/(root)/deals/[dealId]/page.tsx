@@ -1,7 +1,8 @@
 import API from "@/api";
+import Button from "@/components/Button";
 import Page from "@/components/Page";
 import formatPrice from "@/utils/formatPrice.utils";
-import AddToCartButton from "./_components/AddToFavoriteButton";
+import Image from "next/image";
 
 async function DealPage(props: { params: { dealId: string } }) {
   const dealId = props.params.dealId;
@@ -11,17 +12,18 @@ async function DealPage(props: { params: { dealId: string } }) {
     <Page>
       <section className="grid grid-cols-1 sm:grid-cols-2 gap-x-6">
         <div className="relative aspect-[3/4]">
-          {/* <Image
-            alt={product.title}
-            src={product.imgUrl}
+          <Image
+            alt={deal.title}
+            src={deal.imgUrl}
             fill
-            className="object-cover"
-          /> */}
+            className="object-cover group-hover:scale-105 transition-transform"
+            unoptimized
+          />
         </div>
       </section>
 
       <section>
-        <div>{deal.authorId}</div>
+        <div>{deal.author.email}</div>
         <div>{deal.region}</div>
         <hr />
       </section>
@@ -39,9 +41,8 @@ async function DealPage(props: { params: { dealId: string } }) {
             <div className="col-span-4">관심 </div>
             <div className="col-span-4">조회 {deal.views}</div>
           </div>
-
-          <AddToCartButton productId={deal.id} />
         </div>
+        <Button>관심 표하기</Button>
       </section>
     </Page>
   );
