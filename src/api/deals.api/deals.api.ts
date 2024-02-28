@@ -17,7 +17,6 @@ class DealAPI {
     );
     const data = response.data;
     if (!data.success) throw new Error(data.error.message);
-
     const deal = data.result;
 
     return deal;
@@ -57,6 +56,13 @@ class DealAPI {
     const deals = data.result;
 
     return deals;
+  };
+
+  postImage = async (formData: FormData) => {
+    const data = await this.coreClient.post("deals/image", formData);
+    const fileImgUrl = data["data"]["result"];
+
+    return fileImgUrl;
   };
 }
 

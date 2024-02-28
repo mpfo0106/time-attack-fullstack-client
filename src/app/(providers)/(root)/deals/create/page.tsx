@@ -1,41 +1,42 @@
 "use client";
 
+import API from "@/api";
 import Button from "@/components/Button";
 import Heading from "@/components/Heading";
 import Input from "@/components/Input";
 import Page from "@/components/Page";
 import { useAuth } from "@/contexts/auth.context";
-import { useModal } from "@/contexts/modal.context";
-import useMutationCreateDeal from "@/react-query/deal/useMutationCreateDeal";
-import axios from "axios";
-import { useRouter } from "next/navigation";
+import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
 import LogInModal from "../../_components/Header/components/LogInModal";
 
 function CreatePostPage() {
   const auth = useAuth();
-  const router = useRouter();
-  const { mutateAsync: createDeal, isPending } = useMutationCreateDeal();
+
+  const { mutateAsync, isPending } = useMutation({
+    mutationFn: API.deal.createDeal,
+  });
 
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [region, setRegion] = useState("");
   const [price, setPrice] = useState(0);
-
-  const modal = useModal();
+  const [imgUrl, setImgUrl] = useState("");
 
   const handleImageUpload = async (image: File) => {
     const formData = new FormData();
     formData.append("image", image);
-
-    await axios.post("http://localhost:5050/deals", formData);
+    const fileImgUrl = await API.deal.postImage(formData);
+    setImgUrl(fileImgUrl);
   };
 
-  const handleClickSignUp = async () => {
+  const handleClickSubmit = async () => {
     try {
-      await createDeal({
+      console.log(imgUrl);
+      await mutateAsync({
         title,
         content,
+        imgUrl,
         price,
         region,
       });
@@ -43,11 +44,6 @@ function CreatePostPage() {
       alert("판매글 생성에 실패하였습니다.");
     }
   };
-
-  // useEffect(() => {
-  //   if (auth.isLoggedIn) {
-  //   }
-  // }, [auth.isLoggedIn, router]);
 
   return (
     <>
@@ -97,8 +93,8 @@ function CreatePostPage() {
             <div className="mt-2" />
 
             <Button
-              color="blue"
-              onClick={handleClickSignUp}
+              color="black"
+              onClick={handleClickSubmit}
               disabled={isPending}
             >
               판매글 작성하기

@@ -12,10 +12,8 @@ function HeaderMenu() {
   const modal = useModal();
 
   const handleClickLogOut = async () => {
-    /**
-     * 로그아웃 구현
-     */
-    router.push("/");
+    auth.logOut();
+    router.replace("/");
   };
 
   const handleClickLogIn = () => {
