@@ -1,11 +1,11 @@
-import api from "@/api";
+import API from "@/api";
 import Page from "@/components/Page";
 import formatPrice from "@/utils/formatPrice.utils";
 import AddToCartButton from "./_components/AddToFavoriteButton";
 
 async function DealPage(props: { params: { dealId: string } }) {
   const dealId = props.params.dealId;
-  const deal = await api.deals.getDeal(dealId);
+  const deal = await API.deal.getDeal(dealId);
 
   return (
     <Page>

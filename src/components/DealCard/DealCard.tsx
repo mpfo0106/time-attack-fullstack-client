@@ -1,10 +1,10 @@
-import api from "@/api";
+import API from "@/api";
 import formatPrice from "@/utils/formatPrice.utils";
 import Image from "next/image";
 import Link from "next/link";
 
 interface ProductCardProps {
-  deal: Awaited<ReturnType<typeof api.deals.getDeals>>[number];
+  deal: Awaited<ReturnType<typeof API.deal.getDeals>>[number];
 }
 
 function ProductCard({ deal }: ProductCardProps) {

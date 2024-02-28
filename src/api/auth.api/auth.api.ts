@@ -12,16 +12,16 @@ class AuthAPI {
 
   signUp = async (dto: SignUpDto) => {
     const response = await this.coreClient.post<Response>("/auth/sign-up", dto);
-    const data = response.data;
+    const accessToken = response.data.result?.["accessToken"];
 
-    return data;
+    return accessToken;
   };
 
   logIn = async (dto: LogInDto) => {
     const response = await this.coreClient.post<Response>(`/auth/log-in`, dto);
-    const data = response.data;
+    const accessToken = response.data.result?.["accessToken"];
 
-    return data;
+    return accessToken;
   };
 }
 

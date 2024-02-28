@@ -7,6 +7,7 @@ import Page from "@/components/Page";
 import { useAuth } from "@/contexts/auth.context";
 import { useModal } from "@/contexts/modal.context";
 import useMutationCreateDeal from "@/react-query/deal/useMutationCreateDeal";
+import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import LogInModal from "../../_components/Header/components/LogInModal";
@@ -15,11 +16,20 @@ function CreatePostPage() {
   const auth = useAuth();
   const router = useRouter();
   const { mutateAsync: createDeal, isPending } = useMutationCreateDeal();
+
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [region, setRegion] = useState("");
   const [price, setPrice] = useState(0);
+
   const modal = useModal();
+
+  const handleImageUpload = async (image: File) => {
+    const formData = new FormData();
+    formData.append("image", image);
+
+    await axios.post("http://localhost:5050/deals", formData);
+  };
 
   const handleClickSignUp = async () => {
     try {
@@ -27,10 +37,8 @@ function CreatePostPage() {
         title,
         content,
         price,
-        // imgUrl,
         region,
       });
-      auth.logIn(true);
     } catch (e) {
       alert("판매글 생성에 실패하였습니다.");
     }
@@ -63,6 +71,12 @@ function CreatePostPage() {
               type="text"
               value={content}
               onChange={(e) => setContent(e.target.value)}
+              disabled={isPending}
+            />
+            <Input
+              label="이미지"
+              type="file"
+              onChange={(e) => handleImageUpload(e.target.files![0])}
               disabled={isPending}
             />
             <Input

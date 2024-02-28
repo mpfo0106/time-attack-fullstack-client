@@ -1,9 +1,9 @@
-import api from "@/api";
+import API from "@/api";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 export default function useMutationCreateDeal() {
   const queryClient = useQueryClient();
-  const mutationFn = api.deals.createDeal;
+  const mutationFn = API.deal.createDeal;
 
   return useMutation({
     mutationFn,

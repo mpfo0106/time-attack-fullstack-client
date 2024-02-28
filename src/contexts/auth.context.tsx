@@ -16,11 +16,12 @@ const initialValue: AuthContextValue = {
   logOut: () => {},
 };
 
-const AuthContext = createContext<AuthContextValue>(initialValue);
+const AuthContext = createContext<AuthContextValue>(initialValue); //생성한다
 
-export const useAuth = () => useContext(AuthContext);
+export const useAuth = () => useContext(AuthContext); //사용한다
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
+  //범위를 내려준다
   const router = useRouter();
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
 
@@ -42,5 +43,5 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const value: AuthContextValue = { isLoggedIn, logIn, logOut };
 
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>; //값을 내려준다.
 }
