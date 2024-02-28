@@ -23,6 +23,18 @@ class DealAPI {
     return deal;
   };
 
+  updateDeal = async (dto: CreateDealDto, dealId: string | undefined) => {
+    const response = await this.coreClient.patch<Response<PostProductData>>(
+      `/deals/${dealId}/edit`,
+      dto
+    );
+    const data = response.data;
+    if (!data.success) throw new Error(data.error.message);
+    const deal = data.result;
+
+    return deal;
+  };
+
   getDeals = async () => {
     const response = await this.coreClient.get<Response<GetProductsData>>(
       "/deals"
@@ -59,6 +71,18 @@ class DealAPI {
 
     return deals;
   };
+
+  // getIsMyDeal = async (dealId: string) => {
+  //   const response = await this.coreClient.get<Response<Boolean>>(
+  //     "/my/deals/:dealId"
+  //   );
+  //   const data = response.data;
+  //   if (!data.success) throw new Error(data.error.message);
+
+  //   const isMyDeal = data.result;
+
+  //   return isMyDeal;
+  // };
 
   postImage = async (formData: FormData) => {
     const data = await this.coreClient.post("deals/image", formData);
