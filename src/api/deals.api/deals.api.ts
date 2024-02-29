@@ -24,9 +24,21 @@ class DealAPI {
   };
 
   updateDeal = async (dto: UpdateDealDto) => {
+    const { dealId, title, content, imgUrl, price, region } = dto;
     const response = await this.coreClient.patch<Response<PostProductData>>(
-      `/deals/${dto.dealId}/edit`,
-      dto
+      `/deals/${dealId}/edit`,
+      { title, content, imgUrl, price, region }
+    );
+    const data = response.data;
+    if (!data.success) throw new Error(data.error.message);
+    const deal = data.result;
+
+    return deal;
+  };
+
+  deleteDeal = async (dealId: string) => {
+    const response = await this.coreClient.delete<Response<PostProductData>>(
+      `/deals/${dealId}/delete`
     );
     const data = response.data;
     if (!data.success) throw new Error(data.error.message);

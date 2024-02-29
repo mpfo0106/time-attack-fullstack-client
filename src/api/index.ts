@@ -19,9 +19,9 @@ class API {
   }
 
   setAccessToken(accessToken: string) {
-    console.log(2.5);
+    // console.log(2.5);
     this.coreClient.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
-    console.log("1", this.coreClient.defaults.headers.common.Authorization);
+    // console.log("1", this.coreClient.defaults.headers.common.Authorization);
     localStorage.setItem("accessToken", accessToken);
   }
 
