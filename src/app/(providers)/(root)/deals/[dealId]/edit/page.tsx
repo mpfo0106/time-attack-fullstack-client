@@ -9,6 +9,7 @@ import { useAuth } from "@/contexts/auth.context";
 import useMutationUpdateDeal from "@/react-query/deal/useMutationUpdateDeal";
 import { useParams, useRouter } from "next/navigation";
 
+import useMutationDeleteDeal from "@/react-query/deal/useMutationDeleteDeal";
 import { MouseEventHandler, useState } from "react";
 import LogInModal from "../../../_components/Header/components/LogInModal";
 
@@ -25,7 +26,7 @@ function DealEditPage() {
   const [imgUrl, setImgUrl] = useState("");
 
   const { mutateAsync: updateDeal, isPending } = useMutationUpdateDeal();
-  // const { mutateAsync: updateDeal, isPending } = useMutationUpdateDeal();
+  const { mutateAsync: deleteDeal } = useMutationDeleteDeal();
 
   if (typeof dealId !== "string")
     return new Error("deal Id 가 string 이 아닙니다");
@@ -48,6 +49,16 @@ function DealEditPage() {
         region,
       });
       alert("성공적으로 글이 수정되었습니다!");
+      router.replace("/");
+    } catch (e) {
+      alert("판매글 수정에 실패하였습니다.");
+    }
+  };
+
+  const handleClickDelete: MouseEventHandler<HTMLButtonElement> = () => {
+    try {
+      deleteDeal(dealId);
+      alert("성공적으로 글이 삭제되었습니다!");
       router.replace("/");
     } catch (e) {
       alert("판매글 수정에 실패하였습니다.");
@@ -105,6 +116,13 @@ function DealEditPage() {
               disabled={isPending}
             >
               판매글 수정하기
+            </Button>
+            <Button
+              color="black"
+              onClick={handleClickDelete}
+              disabled={isPending}
+            >
+              판매글 삭제하기
             </Button>
           </section>
         </Page>

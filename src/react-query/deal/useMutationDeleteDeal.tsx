@@ -1,11 +1,10 @@
 "use client";
 import API from "@/api";
-import { UpdateDealDto } from "@/api/deals.api/deal.dto";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 export default function useMutationDeleteDeal() {
   const queryClient = useQueryClient();
-  const mutationFn = (dto: UpdateDealDto) => API.deal.deleteDeal(dto);
+  const mutationFn = (dealId: string) => API.deal.deleteDeal(dealId);
 
   return useMutation({
     mutationFn,
