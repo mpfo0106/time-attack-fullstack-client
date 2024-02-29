@@ -55,11 +55,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, [isLoggedIn]);
 
   const logIn = (accessToken: string) => {
-    console.log(1);
     setIsLoggedIn(true);
-    console.log(2);
+
     API.setAccessToken(accessToken);
-    console.log(3);
   };
 
   const logOut = () => {
