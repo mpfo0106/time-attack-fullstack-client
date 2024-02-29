@@ -1,6 +1,6 @@
 "use client";
 
-import { default as API, default as api } from "@/api";
+import API from "@/api";
 import { useRouter } from "next/navigation";
 import { createContext, useContext, useEffect, useState } from "react";
 
@@ -10,10 +10,8 @@ type AuthContextValue = {
   logOut: () => void;
 };
 
-const isAccessTokenStored = !!localStorage.getItem("accessToken");
-
 const initialValue: AuthContextValue = {
-  isLoggedIn: isAccessTokenStored,
+  isLoggedIn: false,
   logIn: () => {},
   logOut: () => {},
 };
@@ -25,7 +23,11 @@ export const useAuth = () => useContext(AuthContext); //사용한다
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   //범위를 내려준다
   const router = useRouter();
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(isAccessTokenStored);
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+
+  useEffect(() => {
+    setIsLoggedIn(!!localStorage.getItem("accessToken"));
+  }, []);
 
   useEffect(() => {
     let timerId: number | undefined; //타이머의 식별자
@@ -34,7 +36,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       try {
         const newAccessToken = await API.auth.refresh();
         if (newAccessToken) {
-          api.setAccessToken(newAccessToken); //헤더에 넣고
+          API.setAccessToken(newAccessToken); //헤더에 넣고
           localStorage.setItem("accessToken", newAccessToken); //로컬에 저장하기
         }
       } catch (e) {
@@ -44,7 +46,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     };
 
     if (isLoggedIn) {
-      refreshToken();
       timerId = window.setInterval(refreshToken, 1000 * 60 * 4.5);
     }
 
@@ -54,20 +55,17 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, [isLoggedIn]);
 
   const logIn = (accessToken: string) => {
+    console.log(1);
     setIsLoggedIn(true);
-    api.setAccessToken(accessToken);
+    console.log(2);
+    API.setAccessToken(accessToken);
+    console.log(3);
   };
 
   const logOut = () => {
     setIsLoggedIn(false);
-    api.removeAccessToken();
+    API.removeAccessToken();
   };
-
-  useEffect(() => {
-    if (isLoggedIn) {
-      router.replace("/");
-    }
-  }, [router, isLoggedIn]);
 
   const value: AuthContextValue = { isLoggedIn, logIn, logOut };
 

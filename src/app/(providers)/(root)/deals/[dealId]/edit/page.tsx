@@ -6,26 +6,28 @@ import Heading from "@/components/Heading";
 import Input from "@/components/Input";
 import Page from "@/components/Page";
 import { useAuth } from "@/contexts/auth.context";
-import { useMutation } from "@tanstack/react-query";
-import { useRouter } from "next/router";
-import { useState } from "react";
+import useMutationUpdateDeal from "@/react-query/deal/useMutationUpdateDeal";
+import { useParams } from "next/navigation";
+
+import { MouseEventHandler, useState } from "react";
 import LogInModal from "../../../_components/Header/components/LogInModal";
 
 function DealEditPage() {
   const auth = useAuth();
-  const router = useRouter();
-  const { dealId } = router.query;
-  console.log(router.query);
 
-  const { mutateAsync, isPending } = useMutation({
-    mutationFn: API.deal.updateDeal,
-  });
+  const dealIdParam = useParams();
+  const dealId = dealIdParam["dealId"];
 
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [region, setRegion] = useState("");
   const [price, setPrice] = useState(0);
   const [imgUrl, setImgUrl] = useState("");
+
+  const { mutateAsync: updateDeal, isPending } = useMutationUpdateDeal();
+
+  if (typeof dealId !== "string")
+    return new Error("deal Id 가 string 이 아닙니다");
 
   const handleImageUpload = async (image: File) => {
     const formData = new FormData();
@@ -34,9 +36,10 @@ function DealEditPage() {
     setImgUrl(fileImgUrl);
   };
 
-  const handleClickSubmit = async () => {
+  const handleClickSubmit: MouseEventHandler<HTMLButtonElement> = () => {
     try {
-      await mutateAsync({
+      updateDeal({
+        dealId,
         title,
         content,
         imgUrl,

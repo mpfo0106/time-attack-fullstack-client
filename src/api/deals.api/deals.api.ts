@@ -1,7 +1,7 @@
 import { Response } from "@/types/Response.type";
 
 import { AxiosInstance } from "axios";
-import { CreateDealDto } from "./deal.dto";
+import { CreateDealDto, UpdateDealDto } from "./deal.dto";
 import { GetProductData, GetProductsData, PostProductData } from "./deals.data";
 
 class DealAPI {
@@ -23,9 +23,9 @@ class DealAPI {
     return deal;
   };
 
-  updateDeal = async (dto: CreateDealDto, dealId: string | undefined) => {
+  updateDeal = async (dto: UpdateDealDto) => {
     const response = await this.coreClient.patch<Response<PostProductData>>(
-      `/deals/${dealId}/edit`,
+      `/deals/${dto.dealId}/edit`,
       dto
     );
     const data = response.data;
@@ -47,9 +47,21 @@ class DealAPI {
     return deals;
   };
 
+  getDealsByView = async () => {
+    const response = await this.coreClient.get<Response<GetProductsData>>(
+      "/deals/views"
+    );
+    const data = response.data;
+    if (!data.success) throw new Error(data.error.message);
+
+    const deals = data.result;
+
+    return deals;
+  };
+
   getDeal = async (dealId: string) => {
     const response = await this.coreClient.get<Response<GetProductData>>(
-      `/deals/${dealId}`
+      `/deal/${dealId}`
     );
     const data = response.data;
     if (!data.success) throw new Error(data.error.message);

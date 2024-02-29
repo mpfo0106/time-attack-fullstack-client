@@ -29,7 +29,7 @@ function DealCard({ deal }: ProductCardProps) {
           {deal.region}
         </div>
         <div className="text-sm flex flex-col sm:flex-row items-baseline gap-1.5">
-          {"api 로 관심 가져오기"}
+          {`조회수 ${deal.views} 회`}
         </div>
       </div>
     </Link>

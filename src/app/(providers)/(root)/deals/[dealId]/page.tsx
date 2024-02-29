@@ -25,7 +25,7 @@ async function DealPage(props: { params: { dealId: string } }) {
       <section>
         <div className="font-bold">{deal.author.email}</div>
         <div className="font-semibold">{deal.region}</div>
-        <hr />
+        <hr className="mt-5 font-bold" />
       </section>
 
       <section>

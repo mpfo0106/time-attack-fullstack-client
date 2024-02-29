@@ -29,14 +29,18 @@ class AuthAPI {
   };
 
   refresh = async () => {
-    const accessToken = localStorage.getItem("accessToken");
+    console.log(
+      " this.coreClient in refresh",
+      this.coreClient.defaults.headers.common
+    );
+    // const accessToken = localStorage.getItem("accessToken");
     const response = await this.coreClient.get<Response>(
-      "/auth/refresh-token",
-      {
-        headers: {
-          Authorization: accessToken ? `Bearer ${accessToken}` : undefined,
-        },
-      }
+      "/auth/refresh-token"
+      // {
+      //   headers: {
+      //     Authorization: accessToken ? `Bearer ${accessToken}` : undefined,
+      //   },
+      // }
     );
     const newAccessToken = response.data?.result;
 
