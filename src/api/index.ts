@@ -11,7 +11,10 @@ class API {
   deal: DealAPI;
 
   constructor() {
-    this.coreClient = axios.create({ baseURL: "http://localhost:5050" });
+    this.coreClient = axios.create({
+      baseURL:
+        "https://port-0-time-attack-fullstack-server-am952nltdolac9.sel5.cloudtype.app",
+    });
     this.auth = new AuthAPI(this.coreClient);
     this.deal = new DealAPI(this.coreClient);
 
