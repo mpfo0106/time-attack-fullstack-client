@@ -3,8 +3,6 @@ import DealCardsList from "@/components/DealCardsList";
 import Heading from "@/components/Heading";
 import Page from "@/components/Page";
 
-export const revalidate = 60;
-
 async function HomePage() {
   const deals = await API.deal.getDeals();
 
@@ -15,5 +13,5 @@ async function HomePage() {
     </Page>
   );
 }
-
+export const revalidate = 5;
 export default HomePage;
